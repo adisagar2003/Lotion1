@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate, useParams, useRoutes } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import ReactQuill from "react-quill";
 
@@ -12,7 +12,7 @@ function Edit(props) {
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    if (props.tasks.find((element) => element.id == id)) {
+    if (props.tasks.find((element) => element.id === id)) {
       props.tasks.find((element) => {
         return element.id === id ? setValue(element.value) : setValue("");
       });
@@ -36,7 +36,7 @@ function Edit(props) {
 
   async function addTask() {
     var targetElement = props.tasks.find((element) => element.id === id);
-    if (targetElement != undefined) {
+    if (targetElement !== undefined) {
       targetElement.title = title;
       targetElement.description = value;
       localStorage.setItem("test", JSON.stringify(props.tasks));
@@ -44,7 +44,7 @@ function Edit(props) {
     }
   }
   function DeleteTask() {
-    var filteredArray = props.tasks.filter((task) => task.id != id);
+    var filteredArray = props.tasks.filter((task) => task.id !== id);
     localStorage.setItem("test", JSON.stringify(filteredArray));
 
     navigate("/");

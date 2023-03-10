@@ -6,7 +6,6 @@ import Edit from "./Components/Edit";
 import Show from "./Components/Show";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [sidebar, isSidebar] = useState(false);
   const [notes, changeNotes] = useState([]);
   const [targetTitle, setTargetTitle] = useState("");
@@ -21,7 +20,7 @@ function App() {
       changeNotes(JSON.parse(localStorage.getItem("test")));
       console.log({ notes });
     }
-  }, []);
+  }, [notes]);
 
   return (
     <BrowserRouter>
