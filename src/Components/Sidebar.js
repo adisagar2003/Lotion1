@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar(props) {
-  console.log(props);
-  let array = [1, 2, 3];
-  console.log(props.changeTitle, props.changeDesc);
-  console.log(array);
+  const sidebarTab = useRef();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    console.log("Sidebar has re-rendered!", { props });
+  }, [props]);
   //console.log(tasks)
   function addAndNavigateToTask() {
     let id = uuidv4();
@@ -18,6 +17,7 @@ function Sidebar(props) {
       ...props.tasks,
       { title: "Untitled", description: "", id: id, createdAt: Date.now() },
     ]);
+
     localStorage.setItem(
       "test",
       JSON.stringify([
@@ -36,11 +36,12 @@ function Sidebar(props) {
           <BsPlusLg />
         </button>
       </div>
-      {props.tasks.length > 1 ? (
+      {props.tasks.length > 0 ? (
         <div>
           {props.tasks.map((element) => {
             return (
               <div
+                ref={sidebarTab}
                 onClick={() => {
                   navigate(`/${element.id}`);
                 }}

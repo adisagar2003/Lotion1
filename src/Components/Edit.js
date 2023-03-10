@@ -11,24 +11,19 @@ function Edit(props) {
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
-  console.log(props);
   useEffect(() => {
-    console.log("element use effect props");
-    console.log(title);
     if (props.tasks.find((element) => element.id == id)) {
-      console.log("Found");
       props.tasks.find((element) => {
         return element.id === id ? setValue(element.value) : setValue("");
       });
     } else {
     }
-  }, [props.tasks, id]);
+  }, [props, id]);
 
   useEffect(() => {
     console.log("element use effect props");
-    console.log(title);
+
     if (props.tasks.find((element) => element.id === id)) {
-      console.log("Found");
       props.tasks.find((element) => {
         return element.id === id ? setTitle(element.title) : setValue("");
       });
@@ -39,18 +34,7 @@ function Edit(props) {
     }
   }, [props.tasks, id]);
 
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    console.log(value);
-    console.log(title);
-    console.log(props);
-  }, [value, title, props]);
-
-  console.log(props, "props");
-
   async function addTask() {
-    console.log("Added a task");
     var targetElement = props.tasks.find((element) => element.id === id);
     if (targetElement != undefined) {
       targetElement.title = title;
@@ -60,7 +44,6 @@ function Edit(props) {
     }
   }
   function DeleteTask() {
-    props.changeTask(props.tasks.filter((task) => task.id != id));
     var filteredArray = props.tasks.filter((task) => task.id != id);
     localStorage.setItem("test", JSON.stringify(filteredArray));
 
@@ -69,11 +52,13 @@ function Edit(props) {
 
   return (
     <div className="flex h-full w-full">
-      <Sidebar
-        tasks={props.tasks}
-        changeTask={props.changeTask}
-        changeTitle={props.changeTitle}
-      />
+      {props.sidebar && (
+        <Sidebar
+          tasks={props.tasks}
+          changeTask={props.changeTask}
+          changeTitle={props.changeTitle}
+        />
+      )}
       <div className="">
         <div className="flex justify-between">
           <div className="flex-col">
